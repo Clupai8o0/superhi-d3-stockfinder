@@ -1,0 +1,12 @@
+Demo:
+https://stockfinder.superhi.com/
+
+API requests:
+https://api.superhi.com/api/stocks/aapl
+https://api.superhi.com/api/stocks/goog
+
+Data source:
+https://iexcloud.io/
+
+
+
