@@ -1,7 +1,10 @@
 const svg = d3.select("svg");
 svg.attr("viewBox", "0 0 960 320");
 
-d3.json("assets/1y.json").then((data) => {
+// const url = "https://api.superhi.com/api/stocks/fb";
+const url = "assets/1y.json";
+
+d3.json(url).then((data) => {
 	const dateParse = d3.timeParse("%Y-%m-%d");
 
 	data = data.map((d) => {
@@ -34,4 +37,22 @@ d3.json("assets/1y.json").then((data) => {
 
 	svg.append("path").datum(data).attr("class", "area").attr("d", area);
 	svg.append("path").datum(data).attr("class", "line").attr("d", line);
+
+	const hoverGroup = svg.append("g").attr("transform", "translate(100, 100)");
+	hoverGroup
+		.append("rect")
+		.attr("x", -50)
+		.attr("y", -60)
+		.attr("width", 100)
+		.attr("height", 50);
+	hoverGroup.append("circle").attr("cx", 0).attr("cy", 0).attr("r", 7);
+
+	const closeText = hoverGroup
+		.append("text")
+		.attr("class", "close")
+		.attr("x", 0)
+		.attr("y", -37)
+    .text("hi")
+
+  const dateText = hoverGroup.append("text").attr("class", "date").attr("x", 0).attr("y", -18).text("date")
 });
