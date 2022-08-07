@@ -1,8 +1,8 @@
 const svg = d3.select("svg");
 svg.attr("viewBox", "0 0 960 320");
 
-// const url = "https://api.superhi.com/api/stocks/fb";
-const url = "assets/1y.json";
+const url = "https://api.superhi.com/api/stocks/ap";
+// const url = "assets/1y.json";
 
 d3.json(url).then((data) => {
 	const dateParse = d3.timeParse("%Y-%m-%d");
@@ -69,8 +69,17 @@ d3.json(url).then((data) => {
 		const i = bisector(data, mouseDate);
 		const dataPoint = data[i];
 
-		closeText.text(dataPoint.close);
-		hoverGroup.attr("transform", `translate(${mouseX},100)`);
+		if (dataPoint) {
+			const x = dateScale(dataPoint.date);
+			const y = closeScale(dataPoint.close);
+      const timeFormat = d3.timeFormat("%Y-%m-%d")
+      const dateFormatted = timeFormat(dataPoint.date)
+
+			closeText.text(dataPoint.close);
+			dateText.text(dateFormatted);
+
+			hoverGroup.attr("transform", `translate(${x},${y})`);
+		}
 	});
 
 	svg.on("mouseout", function () {
