@@ -1,8 +1,11 @@
+const svg = d3.select("svg");
+svg.attr("viewBox", "0 0 960 320");
+
 d3.json("assets/1y.json").then((data) => {
 	const dateParse = d3.timeParse("%Y-%m-%d");
 
 	data = data.map((d) => {
-		return { close: d.close, data: dateParse(d.date) };
+		return { close: d.close, date: dateParse(d.date) };
 	});
 
 	const minDate = d3.min(data, (d) => d.date);
@@ -16,4 +19,11 @@ d3.json("assets/1y.json").then((data) => {
 		.scaleLinear()
 		.domain([minClose, maxClose])
 		.range([280, 60]);
+
+	const line = d3
+		.line()
+		.x((d) => dateScale(d.date))
+		.y((d) => closeScale(d.close));
+
+	svg.append("path").datum(data).attr("class", "line").attr("d", line);
 });
