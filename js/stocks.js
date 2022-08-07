@@ -52,7 +52,20 @@ d3.json(url).then((data) => {
 		.attr("class", "close")
 		.attr("x", 0)
 		.attr("y", -37)
-    .text("hi")
+		.text("hi");
 
-  const dateText = hoverGroup.append("text").attr("class", "date").attr("x", 0).attr("y", -18).text("date")
+	const dateText = hoverGroup
+		.append("text")
+		.attr("class", "date")
+		.attr("x", 0)
+		.attr("y", -18)
+		.text("date");
+
+	svg.on("mousemove", function () {
+		const mouse = d3.mouse(this);
+		const mouseX = mouse[0];
+
+		closeText.text(mouseX);
+		hoverGroup.attr("transform", `translate(${mouseX},100)`);
+	});
 });
