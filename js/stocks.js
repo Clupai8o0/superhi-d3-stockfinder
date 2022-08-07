@@ -64,8 +64,16 @@ d3.json(url).then((data) => {
 	svg.on("mousemove", function () {
 		const mouse = d3.mouse(this);
 		const mouseX = mouse[0];
+		const mouseDate = dateScale.invert(mouseX);
+		const bisector = d3.bisector((d) => d.date).right;
+		const i = bisector(data, mouseDate);
+		const dataPoint = data[i];
 
-		closeText.text(mouseX);
+		closeText.text(dataPoint.close);
 		hoverGroup.attr("transform", `translate(${mouseX},100)`);
+	});
+
+	svg.on("mouseout", function () {
+		hoverGroup.attr("transform", "translate(-9999, -99999)");
 	});
 });
