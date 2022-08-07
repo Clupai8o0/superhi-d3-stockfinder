@@ -25,5 +25,13 @@ d3.json("assets/1y.json").then((data) => {
 		.x((d) => dateScale(d.date))
 		.y((d) => closeScale(d.close));
 
+	const area = d3
+		.area()
+		.x0((d) => dateScale(d.date))
+		.x1((d) => dateScale(d.date))
+		.y0(() => closeScale(minClose - 10))
+		.y1((d) => closeScale(d.close));
+
+	svg.append("path").datum(data).attr("class", "area").attr("d", area);
 	svg.append("path").datum(data).attr("class", "line").attr("d", line);
 });
