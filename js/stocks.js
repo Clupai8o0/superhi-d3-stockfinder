@@ -10,4 +10,10 @@ d3.json("assets/1y.json").then((data) => {
 
 	const minClose = d3.min(data, (d) => d.close);
 	const maxClose = d3.max(data, (d) => d.close);
+
+	const dateScale = d3.scaleTime().domain([minDate, maxDate]).range([60, 900]);
+	const closeScale = d3
+		.scaleLinear()
+		.domain([minClose, maxClose])
+		.range([280, 60]);
 });
